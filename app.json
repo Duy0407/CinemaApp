@@ -18,10 +18,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nguyenquangduy2001.cinemaapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7e29102e-f71a-4a5d-9a4e-1ecbf3cb0ed2"
+      }
+    },
+    "owner": "nguyenquangduy2001"
   }
 }
