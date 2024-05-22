@@ -4,7 +4,7 @@
     "slug": "cinema-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/Logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/Logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.nguyenquangduy2001.cinemaapp"
@@ -29,6 +29,9 @@
         "projectId": "7e29102e-f71a-4a5d-9a4e-1ecbf3cb0ed2"
       }
     },
-    "owner": "nguyenquangduy2001"
+    "owner": "nguyenquangduy2001",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
