@@ -8,15 +8,16 @@ interface IMovie {
   img?: string;
   genre?: string;
   rating: number;
+  onPress?: () => void
 }
 
-function Movie({ name, img, genre, rating }: IMovie) {
+function Movie({ name, img, genre, rating, onPress }: IMovie) {
   const [imageSrc, setImageSrc] = useState(img);
   const handleErrorImage = () => {
     setImageSrc(Image.resolveAssetSource(defaultImage).uri);
   };
   return (
-    <TouchableOpacity style={styles.movie} activeOpacity={0.8}>
+    <TouchableOpacity style={styles.movie} activeOpacity={0.8} onPress={onPress}>
       <View style={{ position: "relative", marginBottom: 8 }}>
         <Image
           source={{ uri: imageSrc }}
