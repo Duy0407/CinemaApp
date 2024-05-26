@@ -18,23 +18,10 @@ import Loading from "components/Loading";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import BottomSheet from "components/BottomSheet/BottomSheet";
 import LanguageBottomSheet from "./components/LanguageBottomSheet";
-import i18n from "@src/i18n/i18n.config"
+import i18n from "@src/i18n/i18n.config";
 import { useTranslation } from "react-i18next";
-import { useNavigation, useRoute } from "@react-navigation/native";
-
-interface IMovie {
-  id: number;
-  name: string;
-  avatar: string;
-  rating: number;
-  genre: string;
-  describe: string;
-  runtime: string;
-  release: string;
-  director: string;
-  cast: string[];
-  createdAt: string;
-}
+import { useNavigation } from "@react-navigation/native";
+import { IMovie } from "contants/constants";
 
 export default function HomeScreen() {
   const { t } = useTranslation();
@@ -42,7 +29,7 @@ export default function HomeScreen() {
 
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [loading, setLoading] = useState(true);
-  const [language, setLanguage] = useState<number>(1)
+  const [language, setLanguage] = useState<number>(1);
 
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   useEffect(() => {
@@ -64,17 +51,22 @@ export default function HomeScreen() {
   };
 
   const handleLanguageSelection = (lang: string, index: number) => {
-    i18n.changeLanguage(lang)
-    setLanguage(index)
-    bottomSheetRef.current?.close()
-  }
+    i18n.changeLanguage(lang);
+    setLanguage(index);
+    bottomSheetRef.current?.close();
+  };
+
+   
+  const handleNavigateMovieDetai = (id: number) => {
+    router.navigate("MovieDetailScreen", { movieId: id });
+  };
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <View style={[globalStyles.safeArea, styles.container]}>
+    <View style={[globalStyles.safeArea]}>
       <View style={styles.header}>
         <Image source={Logo} style={styles.heade_logo} />
         <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
@@ -96,7 +88,7 @@ export default function HomeScreen() {
             </Text>
           </TouchableOpacity>
           <Button
-            text={t('login')}
+            text={t("login")}
             textStyle={styles.button_text}
             buttonStyle={styles.button}
           />
@@ -121,6 +113,7 @@ export default function HomeScreen() {
                 img={item.avatar}
                 genre={item.genre}
                 rating={item.rating}
+                onPress={() => handleNavigateMovieDetai(item.id)}
               />
             ))}
           </View>
@@ -128,16 +121,16 @@ export default function HomeScreen() {
       </ScrollView>
 
       <BottomSheet ref={bottomSheetRef} height={176}>
-        <LanguageBottomSheet index={language} onPress={handleLanguageSelection}/>
+        <LanguageBottomSheet
+          index={language}
+          onPress={handleLanguageSelection}
+        />
       </BottomSheet>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 34,
-  },
   header: {
     paddingHorizontal: 24,
     paddingVertical: 12,

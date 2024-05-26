@@ -12,6 +12,20 @@ export const ResponseStatus = {
 };
 
 export const Language = [
-  {index: 1, title: "English", lang: 'en'},
-  {index: 2, title: "Tiếng Việt", lang: 'vi'}
-]
+  { index: 1, title: "English", lang: "en" },
+  { index: 2, title: "Tiếng Việt", lang: "vi" },
+];
+
+export interface IMovie {
+  id: number;
+  name: string;
+  avatar: string;
+  rating: number;
+  genre: string;
+  describe: string;
+  runtime: string;
+  release: string;
+  director: string;
+  cast: string[];
+  createdAt: string;
+}
