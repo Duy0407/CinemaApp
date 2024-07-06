@@ -29,3 +29,73 @@ export interface IMovie {
   cast: string[];
   createdAt: string;
 }
+
+export interface IMovieRoom {
+  name: string;
+  subName: string;
+  info: IRooms[];
+}
+
+interface IRooms {
+  time: string;
+  viewMode: string;
+  adult: string;
+  child: string;
+  student: string;
+  vip: string;
+}
+
+export const ByCinema = [
+  {
+    title: "Eurasia Cinema7",
+    subTitle: "no sub title",
+    info: [
+      {
+        time: "14:00",
+        viewMode: "Psy",
+        adult: "2 $",
+        child: "1000",
+        student: "1500",
+        vip: "",
+      },
+      {
+        time: "13:00",
+        viewMode: "Psy",
+        adult: "2000",
+        child: "1000",
+        student: "1500",
+        vip: "4000",
+      },
+    ],
+  },
+  {
+    title: "Kinopark 8 IMAX Saryarka",
+    subTitle: "no sub title",
+    info: [
+      {
+        time: "14:00",
+        viewMode: "IMAX Psy",
+        adult: "2000",
+        child: "1000",
+        student: "1500",
+        vip: "4000",
+      },
+      {
+        time: "15:00",
+        viewMode: "IMAX Psy",
+        adult: "2000",
+        child: "1000",
+        student: "1500",
+        vip: "",
+      },
+      {
+        time: "13:00",
+        viewMode: "IMAX Psy",
+        adult: "2000",
+        child: "1000",
+        student: "1500",
+        vip: "8000",
+      },
+    ],
+  },
+];

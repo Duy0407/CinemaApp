@@ -1,20 +1,99 @@
 import { Color } from "@src/styles";
 import Button from "components/Button/Button";
 import { IMovie } from "contants/constants";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  Video,
+  ResizeMode,
+  AVPlaybackStatus,
+  AVPlaybackStatusSuccess,
+} from "expo-av";
+import React, { useEffect, useRef, useState } from "react";
+import VideoController from "./VideoController";
+import { Pause, Play } from "@assets/icons";
+import { globalStyles } from "@src/styles/styles";
 
 interface IProps {
-  movie?: IMovie
+  movie?: IMovie;
 }
 
-function AboutMovie({movie}: IProps) {
+function AboutMovie({ movie }: IProps) {
+  const video = useRef<Video>(null);
+  const [status, setStatus] = useState<AVPlaybackStatusSuccess | null>(null);
+  const [playing, setPlaying] = useState(false);
+
+  const resetVideoPosition = async () => {
+    if (video.current) {
+      await video.current.setPositionAsync(0);
+    }
+  };
+
+  const handleTapPlaying = async () => {
+    if (!video.current) return;
+
+    if (playing) {
+      await video.current.pauseAsync();
+      setPlaying(false)
+    }else{
+      if (status?.didJustFinish) {
+        resetVideoPosition()
+      }
+      await video.current.playAsync();  
+      setPlaying(true)
+    }
+  }
+  
+  const onPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    if (status.isLoaded) {
+      setStatus(status);
+      if (status.didJustFinish) {
+        setPlaying(false)
+      }
+    } else {
+      setStatus(null);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View>
-        <View
-          style={{ width: "100%", height: 210, backgroundColor: Color.black }}
-        ></View>
+        <View style={{ width: "100%", height: 210, position: "relative", backgroundColor: '#000000'}}>
+          <Video
+            ref={video}
+            style={globalStyles.width_hight_full}
+            source={{
+              uri: "https://www.w3schools.com/html/mov_bbb.mp4",
+            }}
+            useNativeControls={false}
+            resizeMode={ResizeMode.COVER}
+            onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+          />
+          <View style={styles.controller}>
+            <TouchableOpacity
+              onPress={handleTapPlaying}
+              style={{
+                padding: 20,
+                backgroundColor: "#3f3f3f",
+                borderRadius: 80,
+                zIndex: 1,
+              }}
+              activeOpacity={0.8}
+            >
+              {playing ? (
+                <Pause color={Color.white} />
+              ) : (
+                <Play color={Color.white} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={styles.review}>
           <View style={{ gap: 4, alignItems: "center" }}>
             <Text
@@ -142,7 +221,9 @@ function AboutMovie({movie}: IProps) {
               >
                 Cast
               </Text>
-              <Text style={[styles.content_text, { color: Color.white, flex: 1 }]}>
+              <Text
+                style={[styles.content_text, { color: Color.white, flex: 1 }]}
+              >
                 Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell,
                 Paul Dano, John Turturro, Andy Serkis, Peter Sarsgaard
               </Text>
@@ -223,5 +304,13 @@ const styles = StyleSheet.create({
   button: {
     padding: 16,
     backgroundColor: "#1d2a40",
+  },
+
+  controller: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

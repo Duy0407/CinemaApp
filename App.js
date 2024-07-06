@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HomeScreen, MovieDetailScreen, SplashScreen } from "./app/screens";
+import { CinemaDetail, HomeScreen, MovieDetailScreen, SplashScreen } from "./app/screens";
 import { StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -32,6 +32,7 @@ export default function App() {
               <Stack.Navigator screenOptions={{headerShown: false}}>
                 <Stack.Screen name="HomeScreen" component={HomeScreen}/>
                 <Stack.Screen name="MovieDetailScreen" component={MovieDetailScreen}/>
+                <Stack.Screen name="CinameDetailScreen" component={CinemaDetail}/>
               </Stack.Navigator>
             </NavigationContainer>
           )}
